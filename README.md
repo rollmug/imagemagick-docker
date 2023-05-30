@@ -51,21 +51,21 @@ Transformed images will be stored in a directory `public/images`, and can be use
 
 ## Environment Vars
 
-To change the URL from which the transformed images are served, create a `.env` file with the variable:
+To change the default settings, create a `.env` file at the root of this package. Possible variables are:
 
 ```sh
-# no trailing slash
+# configure the domain from which images are served. no trailing slash
+# comment out if using localhost
 SERVICE_URL=https://my-domain.com
-```
 
-To change the name of the folder in which transformed images are stored:
-
-```sh
-# specify a directory name. It will be created automatically.
+# configure the name of the folder in which transformed images are stored:
 CACHE_DIR=img
+
+# configure the local port used:
+PORT=5100
 ```
 
-In which case, the returned data will look like:
+In the above case, the returned data will look like:
 
 ```json
 {
