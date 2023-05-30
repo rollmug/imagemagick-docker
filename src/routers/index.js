@@ -13,6 +13,7 @@ const rootPath = path.resolve();
 const index = express.Router();
 const require = createRequire(import.meta.url);
 const debug = require('debug')('app');
+const shellescape = require('shell-escape');
 
 const publicFolder = 'public';
 const originalsFolder = 'original';
@@ -112,7 +113,7 @@ index.post('/', async (req, res, next) => {
     let data = {
         //headers: req.headers,
         //params: req.query,
-        //body: req.body
+        body: req.body
     };
 
     // expecting: imageurl, entry, options, outputfile
@@ -129,10 +130,11 @@ index.post('/', async (req, res, next) => {
         error = 'Paramater `entry` must be set.';
     }
 
-    if (req.body.options) {
-        options = req.body.options;
+    if (req.body.options && Array.isArray(JSON.parse(req.body.options))) {
+        options = JSON.parse(req.body.options);
+        data.body.options = options;
     } else {
-        error = 'Paramater `options` must be set.';
+        error = 'Paramater `options` must be set, and must be an array.';
     }
 
     if (req.body.outputfile) {
@@ -165,7 +167,10 @@ index.post('/', async (req, res, next) => {
 
                     if (cacheFileExists) {
                         if (!transformFileExists) {
-                            const cmd = `magick ${entry} ${options}`;
+                            const escaped = shellescape(options);
+                            debug(escaped);
+                            data.body.escaped = escaped;
+                            const cmd = `magick ${entry} ${escaped}`;
                             try {  
                                 await execShellCommand(`${cmd} "${cacheFile}" "${transformFile}"`);
                                 let transformFileExists = await fse.pathExists(transformFile);

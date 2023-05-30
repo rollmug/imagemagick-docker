@@ -5,15 +5,15 @@ ENV NODE_ENV=production
 ENV PORT=5100
 
 RUN apt -y update && apt -y upgrade && apt -y install curl && \
-    apt -y install build-essential make git && \
+    apt -y install wget git && \
     # download and install latest node
     curl -fsSL https://deb.nodesource.com/setup_current.x | bash - && \
     apt install -y nodejs && \
     # install imagemagick
-    # apt install -y imagemagick && \
-    git clone https://github.com/ImageMagick/ImageMagick.git && cd ImageMagick && ./configure && \
-    make && make install && \
-    ldconfig /usr/local/lib && rm -rf ImageMagick && \
+    t=$(mktemp) && \
+    wget 'https://dist.1-2.dev/imei.sh' -qO "$t" && \
+    bash "$t" && \
+    rm "$t" && \
     # create node user
     useradd -ms /bin/bash node
 

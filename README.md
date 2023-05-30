@@ -48,8 +48,8 @@ Content-type: "application/x-www-form-urlencoded"
 
 - `entry`: the entrypoint ImageMagick command tool. Currently only accepts `convert`.
 
-- `options`: the ImageMagick command options, without the input file and output file.  
-For example: `-resize 50%` or `-crop 40x30+10+10`.
+- `options`: the ImageMagick command options as an array, without the input file and output file.  
+For example: `["-resize", "50%"]` or `["-crop", "40x30+10+10"]`.
 
 - `outputfile`: the desired filename of the resulting image, ie `image-transformed.png`.
 
