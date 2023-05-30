@@ -1,0 +1,10 @@
+public/*
+node_modules/
+*.DS_STORE
+.npm
+*.tgz
+.env
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
