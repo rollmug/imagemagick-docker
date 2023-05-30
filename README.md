@@ -2,7 +2,7 @@
 
 A web API to convert, cache, and serve images with ImageMagick
 
-## Installation with Docker
+## Installation with Docker (recommended)
 
 Install [Docker](https://www.docker.com) on your machine if it isn't already.
 
