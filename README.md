@@ -65,7 +65,7 @@ CACHE_DIR=img
 PORT=5100
 ```
 
-In the above case, the returned data will look like:
+In the above case, you would send `POST` requests to `https://my-domain.com` and the returned data will look like:
 
 ```json
 {
