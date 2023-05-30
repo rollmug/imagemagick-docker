@@ -2,19 +2,47 @@
 
 A web API to convert, cache, and serve images with ImageMagick
 
-## Usage
+## Installation with Docker
+
+Install [Docker](https://www.docker.com) on your machine if it isn't already.
+
+Then, clone this repo:
 
 ```sh
+git clone https://github.com/rollmug/imagemagick-docker.git
+```
+
+and run:
+
+```sh
+cd imagemagick-docker
+docker compose up
+```
+
+## Installation without Docker
+
+To use without Docker and run as a local Node app, you must have Imagemagick installed on the machine. For Mac and Linux, install it with homebrew:
+
+```sh
+brew install imagemagick
+```
+
+Then: 
+
+```sh
+cd imagemagick-docker
 npm start
 ```
 
-Send `POST` request to `http://localhost:5100` with:
+## General Usage
+
+Send `POST` requests to `http://localhost:5100` with:
 
 ```sh
 Content-type: "application/x-www-form-urlencoded"
 ```
 
-**Required params:**
+## Required POST params:
 
 - `imageurl`: the URL of the image you want to transform
 
