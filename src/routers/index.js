@@ -113,7 +113,7 @@ index.post('/', async (req, res, next) => {
     let data = {
         //headers: req.headers,
         //params: req.query,
-        body: req.body
+        // body: req.body
     };
 
     // expecting: imageurl, entry, options, outputfile
@@ -132,7 +132,7 @@ index.post('/', async (req, res, next) => {
 
     if (req.body.options && Array.isArray(JSON.parse(req.body.options))) {
         options = JSON.parse(req.body.options);
-        data.body.options = options;
+        // data.body.options = options;
     } else {
         error = 'Paramater `options` must be set, and must be an array.';
     }
@@ -169,7 +169,7 @@ index.post('/', async (req, res, next) => {
                         if (!transformFileExists) {
                             const escaped = shellescape(options);
                             debug(escaped);
-                            data.body.escaped = escaped;
+                            // data.body.escaped = escaped;
                             const cmd = `magick ${entry} ${escaped}`;
                             try {  
                                 await execShellCommand(`${cmd} "${cacheFile}" "${transformFile}"`);
