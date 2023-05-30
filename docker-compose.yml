@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  imagemagick:
+    image: davekobrenski/imagemagick-node:0.0.2
+    restart: always
+    environment:
+      NODE_ENV: production
+      SERVICE_URL: ${SERVICE_URL}
+      PORT: ${PORT}
+      CACHE_DIR: ${CACHE_DIR}
+    ports:
+      - ${PORT}:5100
+    volumes:
+      - ./public:/im/app/public
