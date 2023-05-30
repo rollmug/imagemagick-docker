@@ -16,7 +16,7 @@ and run:
 
 ```sh
 cd imagemagick-docker
-docker compose up
+docker compose up -d
 ```
 
 ## Installation without Docker
