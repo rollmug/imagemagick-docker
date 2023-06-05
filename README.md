@@ -25,7 +25,7 @@ For Macs with M1 chips (arm64), you'll have better performance with this:
 
 ```sh
 cd imagemagick-docker
-docker compose -f docker-compose.arm64.yml
+docker compose -f docker-compose.arm64.yml up -d
 ```
 
 ## Installation without Docker
