@@ -15,6 +15,21 @@ const require = createRequire(import.meta.url);
 const debug = require('debug')('app');
 const shellescape = require('shell-escape');
 
+const { auth } = require('express-oauth2-jwt-bearer');
+const checkJwt = auth({
+    audience: process.env.AUTH_IDENTIFIER,
+    issuerBaseURL: process.env.AUTH_BASE_URL
+});
+
+if(process.env.ENABLE_AUTH === 'true') {
+    debug(`Auth enabled!`);
+    index.use(checkJwt);
+    index.use((err, req, res, next) => {
+        let data = { error: err };
+        res.status(err.status).json(data);
+    });
+}
+
 const publicFolder = 'public';
 const originalsFolder = 'original';
 const port = process.env.PORT || 5100;
@@ -111,9 +126,10 @@ index.post('/', async (req, res, next) => {
     await createCacheDir();
 
     let data = {
-        //headers: req.headers,
-        //params: req.query,
-        // body: req.body
+        // headers: req.headers,
+        // params: req.query,
+        // body: req.body,
+        // auth: req.auth
     };
 
     // expecting: imageurl, entry, options, outputfile
@@ -171,13 +187,12 @@ index.post('/', async (req, res, next) => {
                             debug(escaped);
                             // data.body.escaped = escaped;
                             const cmd = `magick ${entry} ${escaped}`;
-                            try {  
+                            try {
                                 await execShellCommand(`${cmd} "${cacheFile}" "${transformFile}"`);
                                 let transformFileExists = await fse.pathExists(transformFile);
                                 if (transformFileExists) {
                                     data.success = 1;
                                     data.filename = outputfile;
-                                    // data.original = `${serviceURL}/${originalsFolder}/${results.filename}`;
                                     data.transformed = `${serviceURL}/${cacheFolder}/${outputfile}`;
                                 } else {
                                     data.error = 'Image transform failed.';
@@ -190,7 +205,6 @@ index.post('/', async (req, res, next) => {
                             // just return the file
                             data.success = 1;
                             data.filename = outputfile;
-                            // data.original = `${serviceURL}/${originalsFolder}/${results.filename}`;
                             data.transformed = `${serviceURL}/${cacheFolder}/${outputfile}`;
                         }
                     } else {

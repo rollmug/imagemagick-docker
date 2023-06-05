@@ -1,6 +1,8 @@
 # ImageMagick Node Web API
 
-A web API to convert, cache, and serve images with ImageMagick
+A web API to convert, cache, and serve images with ImageMagick.
+
+_**This is beta software.** Let me know if you have ideas for improvements or encounter any bugs._
 
 ## Installation with Docker (recommended)
 
@@ -77,20 +79,35 @@ Or on error, for example if the ImageMagick command failed:
 
 Transformed images will be stored in a directory `public/images`, and can be used locally or served from the URL provided in the data.
 
+## Securing the API
+
+It is highly recommended to secure the API endpoint. This package allows you to use Auth0's Machine-to-Machine (M2M) authentication, which will secure your API by authenticating a JWT token provided in the header:
+
+```sh
+Authorization: Bearer {your-token}
+```
+
+To enable this, you'll need an [Auth0](https://auth0.com) account with an application of type "API" setup. Then, you can provide some details in your environment variables, as detailed below. [More info on setting up Auth0 here.](https://javascript.plainenglish.io/securing-a-node-js-api-with-auth0-7785a8f2c8e3)
+
 ## Environment Vars
 
 To change the default settings, create a `.env` file at the root of this package. Possible variables are:
 
 ```sh
-# configure the domain from which images are served. no trailing slash
-# comment out if using localhost
-SERVICE_URL=https://my-domain.com
+# specify the service's base url to use for serving images, ie https://domain.com
+# no trailing slash. leave empty/unset if using localhost
+SERVICE_URL=https://mydomain.com
 
-# configure the name of the folder in which transformed images are stored:
-CACHE_DIR=img
-
-# configure the local port used:
 PORT=5100
+
+# the name of the directory where images will be served from
+CACHE_DIR="images"
+
+# Use Auth0 to validate JWTs. 
+# Specify the identifier and the base URL for your Auth0 API application
+ENABLE_AUTH=false # set to true to protect the API with Auth0 M2M
+AUTH_IDENTIFIER="https://identifier-url.com"
+AUTH_BASE_URL="https://{your-tenant}.auth0.com/"
 ```
 
 In the above case, you would send `POST` requests to `https://my-domain.com` and the returned data will look like:
