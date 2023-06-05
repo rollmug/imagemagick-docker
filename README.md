@@ -21,6 +21,13 @@ cd imagemagick-docker
 docker compose up -d
 ```
 
+For Macs with M1 chips (arm64), you'll have better performance with this:
+
+```sh
+cd imagemagick-docker
+docker compose -f docker-compose.arm64.yml
+```
+
 ## Installation without Docker
 
 To use without Docker and run as a local Node app, you must have Imagemagick installed on the machine. For Mac and Linux, install it with homebrew:
