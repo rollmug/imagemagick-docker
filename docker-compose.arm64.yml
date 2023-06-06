@@ -9,6 +9,9 @@ services:
       SERVICE_URL: ${SERVICE_URL}
       PORT: ${PORT}
       CACHE_DIR: ${CACHE_DIR}
+      ENABLE_AUTH: ${ENABLE_AUTH}
+      AUTH_IDENTIFIER: ${AUTH_IDENTIFIER}
+      AUTH_BASE_URL: ${AUTH_BASE_URL}
     ports:
       - ${PORT}:5100
     volumes:
