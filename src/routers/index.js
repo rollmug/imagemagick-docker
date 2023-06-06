@@ -125,6 +125,10 @@ const downloadImageFromURL = async (url) => {
     return data;
 }
 
+index.get('/', (req, res) => {
+    res.send('App ready.');
+});
+
 index.post('/', async (req, res, next) => {
     await createCacheDir();
 
