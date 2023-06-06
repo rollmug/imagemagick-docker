@@ -16,18 +16,21 @@ const debug = require('debug')('app');
 const shellescape = require('shell-escape');
 
 const { auth } = require('express-oauth2-jwt-bearer');
-const checkJwt = auth({
-    audience: process.env.AUTH_IDENTIFIER,
-    issuerBaseURL: process.env.AUTH_BASE_URL
-});
 
-if(process.env.ENABLE_AUTH === 'true') {
-    debug(`Auth enabled!`);
-    index.use(checkJwt);
-    index.use((err, req, res, next) => {
-        let data = { error: err };
-        res.status(err.status).json(data);
-    });
+if (process.env.ENABLE_AUTH === 'true') {
+    if (process.env.AUTH_IDENTIFIER && process.env.AUTH_BASE_URL) {
+        const checkJwt = auth({
+            audience: process.env.AUTH_IDENTIFIER,
+            issuerBaseURL: process.env.AUTH_BASE_URL
+        });
+
+        debug(`Auth enabled!`);
+        index.use(checkJwt);
+        index.use((err, req, res, next) => {
+            let data = { error: err };
+            res.status(err.status).json(data);
+        });
+    }
 }
 
 const publicFolder = 'public';
