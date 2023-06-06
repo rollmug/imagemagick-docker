@@ -40,6 +40,7 @@ Then:
 
 ```sh
 cd imagemagick-docker
+npm install
 npm start
 ```
 
