@@ -5,6 +5,8 @@ dotenv.config();
 import path from "path";
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
+const SegfaultHandler = require('segfault-handler');
+SegfaultHandler.registerHandler('crash.log');
 
 const app = express();
 const port = process.env.PORT || 5100;
