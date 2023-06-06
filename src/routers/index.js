@@ -182,17 +182,19 @@ index.post('/', async (req, res, next) => {
                     let transformFileExists = await fse.pathExists(transformFile);
 
                     if (cacheFileExists) {
+                        const escaped = shellescape(options);
+                        const cmd = `magick ${entry} ${escaped}`;
+
                         if (!transformFileExists) {
-                            const escaped = shellescape(options);
-                            debug(escaped);
-                            // data.body.escaped = escaped;
-                            const cmd = `magick ${entry} ${escaped}`;
                             try {
                                 await execShellCommand(`${cmd} "${cacheFile}" "${transformFile}"`);
                                 let transformFileExists = await fse.pathExists(transformFile);
                                 if (transformFileExists) {
-                                    data.success = 1;
+                                    data.success = true;
+                                    data.existed = false;
+                                    data.message = `File not in cache, so it was created.`
                                     data.filename = outputfile;
+                                    data.cmd = `${cmd} ${results.filename} ${outputfile}`;
                                     data.transformed = `${serviceURL}/${cacheFolder}/${outputfile}`;
                                 } else {
                                     data.error = 'Image transform failed.';
@@ -203,8 +205,11 @@ index.post('/', async (req, res, next) => {
                             }
                         } else {
                             // just return the file
-                            data.success = 1;
+                            data.success = true;
+                            data.existed = true;
+                            data.message = `A file with the name ${outputfile} already existed Serving from cache.`
                             data.filename = outputfile;
+                            data.cmd = `${cmd} ${results.filename} ${outputfile}`;
                             data.transformed = `${serviceURL}/${cacheFolder}/${outputfile}`;
                         }
                     } else {

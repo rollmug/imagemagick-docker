@@ -1,6 +1,6 @@
 {
   "name": "imagemagick-docker",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "A Node web API to convert, cache, and serve images with ImageMagick",
   "main": "index.js",
   "type": "module",
