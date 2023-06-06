@@ -1,8 +1,7 @@
-import * as fs from 'fs';
+//import * as fs from 'fs';
 import express from "express";
 import path from "path";
 import { exec } from 'child_process';
-import { promisify } from "util";
 import axios from 'axios';
 import fse from 'fs-extra/esm'
 import filenamify from 'filenamify';
@@ -14,8 +13,25 @@ const index = express.Router();
 const require = createRequire(import.meta.url);
 const debug = require('debug')('app');
 const shellescape = require('shell-escape');
-
 const { auth } = require('express-oauth2-jwt-bearer');
+
+const publicFolder = 'public';
+const originalsFolder = 'original';
+const port = process.env.PORT || 5100;
+const cacheFolder = process.env.CACHE_DIR || 'images';
+const serviceURL = process.env.SERVICE_URL || `http://localhost:${port}`;
+
+const publicPath = path.join(rootPath, publicFolder);
+const cachePath = path.join(publicPath, cacheFolder);
+const originalsPath = path.join(publicPath, originalsFolder);
+
+index.get('/', async (req, res) => {
+    const opts = { mode: 0o2775 };
+    await fse.ensureDir(publicPath, opts);
+    await fse.ensureDir(cachePath, opts);
+    await fse.ensureDir(originalsPath, opts);
+    res.send('App ready.');
+});
 
 if (process.env.ENABLE_AUTH === 'true') {
     if (process.env.AUTH_IDENTIFIER && process.env.AUTH_BASE_URL) {
@@ -33,16 +49,6 @@ if (process.env.ENABLE_AUTH === 'true') {
     }
 }
 
-const publicFolder = 'public';
-const originalsFolder = 'original';
-const port = process.env.PORT || 5100;
-const cacheFolder = process.env.CACHE_DIR || 'images';
-const serviceURL = process.env.SERVICE_URL || `http://localhost:${port}`;
-
-const publicPath = path.join(rootPath, publicFolder);
-const cachePath = path.join(publicPath, cacheFolder);
-const originalsPath = path.join(publicPath, originalsFolder);
-
 const execShellCommand = (cmd) => {
     return new Promise((resolve, reject) => {
         exec(cmd, (error, stdout, stderr) => {
@@ -52,19 +58,6 @@ const execShellCommand = (cmd) => {
             resolve(stdout ? stdout : stderr);
         });
     });
-}
-
-const makeDir = promisify(fs.mkdir);
-const createDirectory = async path => {
-    await makeDir(path);
-}
-
-const createCacheDir = async () => {
-    if (fs.existsSync(cachePath) === false) {
-        await createDirectory(cachePath).then(() => {
-            debug(`'cache' directory created.`);
-        })
-    }
 }
 
 const isValidUrl = (string) => {
@@ -125,12 +118,12 @@ const downloadImageFromURL = async (url) => {
     return data;
 }
 
-index.get('/', (req, res) => {
-    res.send('App ready.');
-});
-
 index.post('/', async (req, res, next) => {
-    await createCacheDir();
+    //await createCacheDir();
+    const opts = { mode: 0o2775 };
+    await fse.ensureDir(publicPath, opts);
+    await fse.ensureDir(cachePath, opts);
+    await fse.ensureDir(originalsPath, opts);
 
     let data = {
         // headers: req.headers,

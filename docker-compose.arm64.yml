@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   imagemagick:
-    image: davekobrenski/imagemagick-node:arm64-0.1.3
+    image: davekobrenski/imagemagick-node:arm64-0.1.4
     restart: always
     environment:
       NODE_ENV: production
