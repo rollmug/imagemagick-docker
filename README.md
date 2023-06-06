@@ -42,6 +42,8 @@ Then:
 cd imagemagick-docker
 npm install
 npm start
+# for debugging, run:
+# npm run dev
 ```
 
 ## General Usage
