@@ -26,7 +26,7 @@ const cachePath = path.join(publicPath, cacheFolder);
 const originalsPath = path.join(publicPath, originalsFolder);
 
 index.get('/', async (req, res) => {
-    const opts = { mode: 0o2775 };
+    const opts = { mode: 0o775 };
     await fse.ensureDir(publicPath, opts);
     await fse.ensureDir(cachePath, opts);
     await fse.ensureDir(originalsPath, opts);
