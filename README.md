@@ -119,10 +119,10 @@ PORT=5100
 # the name of the directory where images will be served from
 CACHE_DIR="images"
 
-# Use Auth0 to validate JWTs. 
+# Optionally, use Auth0 to validate and secure with JWTs. 
 # Specify the identifier and the base URL for your Auth0 API application
 ENABLE_AUTH=false # set to true to protect the API with Auth0 M2M
-AUTH_IDENTIFIER="https://identifier-url.com"
-AUTH_BASE_URL="https://{your-tenant}.auth0.com/"
+AUTH_IDENTIFIER="https://identifier-url.com" # the value you specify in Auth0 to identify the API
+AUTH_BASE_URL="https://{your-tenant}.auth0.com/" # from Auth0 account settings
 ```
 
