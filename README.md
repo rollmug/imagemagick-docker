@@ -95,7 +95,7 @@ Transformed images will be stored in a directory `public/images`, and can be use
 
 ## Securing the API
 
-It is highly recommended to secure the API endpoint. This package allows you to use Auth0's Machine-to-Machine (M2M) authentication, which will secure your API by authenticating a JWT token provided in the header:
+For installs on a public-facing server, it is highly recommended to secure the API endpoint. This package allows you to use Auth0's Machine-to-Machine (M2M) authentication, which will secure your API by authenticating a JWT token provided in the header:
 
 ```sh
 Authorization: Bearer {your-token}
@@ -124,12 +124,3 @@ AUTH_IDENTIFIER="https://identifier-url.com"
 AUTH_BASE_URL="https://{your-tenant}.auth0.com/"
 ```
 
-In the above case, you would send `POST` requests to `https://my-domain.com` and the returned data will look like:
-
-```json
-{
-    "success": 1,
-    "filename": "my-file.png",
-    "transformed": "https://my-domain.com/img/my-file.png"
-}
-```
