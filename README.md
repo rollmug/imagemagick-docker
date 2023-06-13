@@ -66,7 +66,7 @@ For example: `["-resize", "50%"]` or `["-crop", "40x30+10+10"]`.
 - `outputfile`: the desired filename of the resulting image, ie `image-transformed.png`.
 
 <p align="center">
-    <img src="https://cdn.statically.io/gh/rollmug/static-assets/main/node-imgmagick/postman-imgmagick.jpg">
+    <img src="https://cdn.statically.io/gh/rollmug/static-assets/main/node-imgmagick/imagemagick-api.jpg">
 </p>
 
 ## Response
